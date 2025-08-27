@@ -1,0 +1,31 @@
+:root { --brand: #5b8ef1; }
+body {
+  background: linear-gradient(180deg, #f8fbff, #ffffff);
+  min-height: 100vh;
+}
+.brand-gradient { background: linear-gradient(90deg, var(--brand), #7ed4ff); }
+.hero {
+  background: url('https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1600&auto=format&fit=crop') center/cover no-repeat;
+  color: #fff; border-radius: 1rem; min-height: 220px; display: grid; place-items: center;
+  box-shadow: 0 8px 24px rgba(0,0,0,.08);
+}
+.card-hover { transition: transform .2s ease, box-shadow .2s ease; }
+.card-hover:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(0,0,0,.10);
+}
+.sticky-bottom-cta { position: sticky; bottom: 0; z-index: 100; border-top: 1px solid #eee; background: #fff; }
+.rating { font-size: .95rem; }
+
+.card-img-top {
+  height: 160px;
+  object-fit: cover;
+  border-top-left-radius: .5rem;
+  border-top-right-radius: .5rem;
+}
+.menu-thumb {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: .5rem;
+}

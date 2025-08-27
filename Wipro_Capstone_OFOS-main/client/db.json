@@ -1,0 +1,147 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "Admin",
+      "email": "admin@gmail.com",
+      "password": "admin123",
+      "role": "admin"
+    },
+    {
+      "id": "2",
+      "name": "John Doe",
+      "email": "owner1@gmail.com",
+      "password": "user123",
+      "role": "owner"
+    },
+    {
+      "id": "3",
+      "name": "Jane Smith",
+      "email": "customer1@gmail.com",
+      "password": "pass123",
+      "role": "customer"
+    }
+  ],
+  "restaurants": [
+    {
+      "id": "1",
+      "name": "Spicy Grill",
+      "address": "12 Main Street",
+      "contact": "8888888888"
+    },
+    {
+      "id": "2",
+      "name": "Pizza House",
+      "address": "45 Market Road",
+      "contact": "9999999999"
+    },
+    {
+      "id": "3",
+      "name": "Veggie Delight",
+      "address": "88 Green Ave",
+      "contact": "7777777777"
+    },
+    {
+      "id": "4",
+      "name": "Burger Town",
+      "address": "34 Food Lane",
+      "contact": "6666666666"
+    }
+  ],
+  "orders": [
+    {
+      "id": "101",
+      "restaurantId": "1",
+      "restaurantName": "Spicy Grill",
+      "userId": "2",
+      "userName": "John Doe",
+      "items": [
+        "Chicken Wings",
+        "Coke"
+      ],
+      "amount": 450,
+      "status": "Delivered"
+    },
+    {
+      "id": "102",
+      "restaurantId": "2",
+      "restaurantName": "Pizza House",
+      "userId": "3",
+      "userName": "Jane Smith",
+      "items": [
+        "Margherita Pizza"
+      ],
+      "amount": 300,
+      "status": "Out for Delivery"
+    },
+    {
+      "id": "103",
+      "restaurantId": "3",
+      "restaurantName": "Veggie Delight",
+      "userId": "3",
+      "userName": "Mike Johnson",
+      "items": [
+        "Veg Burger",
+        "Lemonade"
+      ],
+      "amount": 250,
+      "status": "Preparing"
+    },
+    {
+      "id": "104",
+      "restaurantId": "4",
+      "restaurantName": "Burger Town",
+      "userId": "2",
+      "userName": "John Doe",
+      "items": [
+        "Double Cheese Burger",
+        "Fries"
+      ],
+      "amount": 500,
+      "status": "Delivered"
+    }
+  ],
+  "refunds": [
+    {
+      "id": "1",
+      "userId": 101,
+      "restaurantId": 501,
+      "orderId": 3001,
+      "amount": 120,
+      "reason": "Item was cold on arrival",
+      "status": "pending"
+    },
+    {
+      "id": "2",
+      "userId": 102,
+      "restaurantId": 502,
+      "orderId": 3004,
+      "amount": 200,
+      "reason": "Wrong item delivered",
+      "status": "evaluating"
+    },
+    {
+      "id": "3",
+      "userId": 103,
+      "restaurantId": 503,
+      "orderId": 3010,
+      "amount": 85,
+      "reason": "Missing item in order",
+      "status": "refund done"
+    }
+  ],
+  "disputes": [
+    {
+      "id": "1",
+      "userId": 101,
+      "orderId": 3010,
+      "complaint": "Delivery was late by over an hour"
+    },
+    {
+      "id": "2",
+      "userId": 102,
+      "orderId": 3010,
+      "complaint": "Rider was rude during delivery"
+    }
+  ]
+}
