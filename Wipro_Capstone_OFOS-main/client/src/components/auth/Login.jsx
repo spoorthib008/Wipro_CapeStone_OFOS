@@ -1,42 +1,65 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
 
-const Login = ({ onLogin }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const LoginSchema = Yup.object().shape({
+  email: Yup.string().email("Invalid email").required("Email is required"),
+  password: Yup.string().min(4, "Too short").required("Password is required"),
+});
+
+const Login = ({ onLoginSuccess }) => {
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleLogin = async (values) => {
+    const response = await fetch("http://localhost:5000/users");
+    const users = await response.json();
 
-    let role = "customer"; 
-    if (email.includes("admin")) role = "admin";
-    else if (email.includes("owner")) role = "owner";
+    const user = users.find(
+      (u) => u.email === values.email && u.password === values.password
+    );
 
-    onLogin(role);
+    if (user) {
+      localStorage.setItem("jwtToken", "dummy-jwt-token");
+      localStorage.setItem("userRole", user.role);
+      onLoginSuccess(user.role);
 
-    if (role === "admin") navigate("/admin/dashboard");
-    if (role === "owner") navigate("/owner/dashboard");
-    if (role === "customer") navigate("/customer/dashboard");
+      if (user.role === "admin") navigate("/admin/dashboard");
+      if (user.role === "owner") navigate("/owner/dashboard");
+      if (user.role === "customer") navigate("/customer/dashboard");
+    } else {
+      alert("Invalid credentials");
+    }
   };
 
   return (
     <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "80vh" }}>
       <div className="card shadow-lg p-4" style={{ width: "400px" }}>
         <h3 className="text-center text-primary mb-4">Login</h3>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <label>Email</label>
-            <input type="email" className="form-control" value={email}
-              onChange={(e) => setEmail(e.target.value)} required />
-          </div>
-          <div className="mb-3">
-            <label>Password</label>
-            <input type="password" className="form-control" value={password}
-              onChange={(e) => setPassword(e.target.value)} required />
-          </div>
-          <button type="submit" className="btn btn-primary w-100">Login</button>
-        </form>
+
+        <Formik
+          initialValues={{ email: "", password: "" }}
+          validationSchema={LoginSchema}
+          onSubmit={handleLogin}
+        >
+          {() => (
+            <Form>
+              <div className="mb-3">
+                <label>Email</label>
+                <Field type="email" name="email" className="form-control" />
+                <ErrorMessage name="email" component="div" className="text-danger small" />
+              </div>
+
+              <div className="mb-3">
+                <label>Password</label>
+                <Field type="password" name="password" className="form-control" />
+                <ErrorMessage name="password" component="div" className="text-danger small" />
+              </div>
+
+              <button type="submit" className="btn btn-primary w-100">Login</button>
+            </Form>
+          )}
+        </Formik>
       </div>
     </div>
   );

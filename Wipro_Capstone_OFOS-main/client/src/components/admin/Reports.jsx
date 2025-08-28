@@ -30,7 +30,6 @@ const Reports = () => {
 
     return (
         <div className='container-fluid'>
-            <AdminNavbar /><br />
             <div className="row">
                 <div className="col-md-3">
                     <div className="card text-white bg-primary mb-3">

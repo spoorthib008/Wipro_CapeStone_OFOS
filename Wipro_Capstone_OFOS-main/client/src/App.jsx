@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Route, Router, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import Login from "./components/auth/Login";
 import Registration from "./components/auth/Registration";
 import PublicNavbar from "./components/PublicNavbar";
@@ -7,13 +7,18 @@ import Footer from "./components/Footer";
 import AdminDashboard from "./components/admin/AdminDashboard";
 import Reports from "./components/admin/Reports";
 import RefundAndDisputes from "./components/admin/RefundAndDisputes";
-import Restaurant from "../../../../ofos-customer-dashboard-frontend/src/pages/Restaurant";
-import Restaurants from "../../../../ofos-customer-dashboard-frontend/src/pages/Restaurants";
-import Cart from "../../../../ofos-customer-dashboard-frontend/src/pages/Cart";
-import Checkout from "../../../../ofos-customer-dashboard-frontend/src/pages/Checkout";
-import Orders from "../../../../ofos-customer-dashboard-frontend/src/pages/Orders";
-import Profile from "../../../../ofos-customer-dashboard-frontend/src/pages/Profile";
-import NotFound from "../../../../ofos-customer-dashboard-frontend/src/pages/NotFound";
+import Restaurant from "./components/customer/customerdashboard/pages/Restaurant";
+import Restaurants from "./components/customer/customerdashboard/pages/Restaurants";
+import Cart from "./components/customer/customerdashboard/pages/Cart";
+import Checkout from "./components/customer/customerdashboard/pages/Checkout";
+import Orders from "./components/customer/customerdashboard/pages/Orders";
+import Profile from "./components/customer/customerdashboard/pages/Profile";
+import NotFound from "./components/customer/customerdashboard/pages/NotFound";
+import { AuthProvider } from "./components/customer/customerdashboard/context/AuthContext";
+import { CartProvider } from "./components/customer/customerdashboard/context/CartContext";
+import TopNav from "./components/customer/customerdashboard/components/TopNav";
+import ProtectedRoute from "./components/customer/customerdashboard/components/ProtectedRoute"
+import AdminNavbar from "./components/admin/AdminNavbar";
 
 const App = () => {
   const [userRole, setUserRole] = useState(localStorage.getItem('userRole'));
@@ -36,11 +41,11 @@ const App = () => {
       return <PublicNavbar />;
     }
     switch (userRole) {
-      case 'Admin':
+      case 'admin':
         return <AdminNavbar onLogout={handleLogout} />;
-      case 'Restaurant Owner':
-        return <RestaurantOwnerNavbar onLogout={handleLogout} />;
-      case 'Customer':
+      case 'owner':
+        return <RestaurantNavbar onLogout={handleLogout} />;
+      case 'customer':
         return <CustomerNavbar onLogout={handleLogout} />;
       default:
         return <PublicNavbar />;
@@ -49,7 +54,7 @@ const App = () => {
 
   return (
       <div className="flex flex-col min-h-screen">
-        {renderNavbar()}
+        {renderNavbar()} <br/>
         <main className="flex-grow">
           <Routes>
             <Route path="/login" element={<Login onLoginSuccess={handleLoginSuccess} />} />
@@ -57,14 +62,14 @@ const App = () => {
             
             {isLoggedIn ? (
               <>
-                {userRole === 'Customer' && (
+                {userRole === 'customer' && (
                   <>
                     <Route path="/" element={<div>Customer Dashboard: Restaurant Listing, Search & Filters</div>} />
                     <Route path="/orders" element={<div>Customer Orders History</div>} />
                     <Route path="/profile" element={<div>Customer Profile</div>} />
                   </>
                 )}
-                {userRole === 'Restaurant Owner' && (
+                {userRole === 'owner' && (
                   <>
                     <Route path="/" element={<div>Restaurant Owner Dashboard: Active Orders</div>} />
                     <Route path="/owner/menu" element={<div>Menu Editor</div>} />
@@ -72,7 +77,7 @@ const App = () => {
                     <Route path="/owner/profile" element={<div>Restaurant Owner Profile</div>} />
                   </>
                 )}
-                {userRole === 'Admin' && (
+                {userRole === 'admin' && (
                   <>
                     <Route path="/admin/dashboard" element={<AdminDashboard />} />
                     <Route path="/admin/reports" element={<Reports />} />

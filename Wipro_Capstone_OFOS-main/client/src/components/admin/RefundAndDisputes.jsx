@@ -161,7 +161,6 @@ const RefundAndDisputes = () => {
 
   return (
     <div className="container-fluid">
-      <AdminNavbar />
       <br />
       <div className="row text-center">
         <div className="col-md-6 mb-3">

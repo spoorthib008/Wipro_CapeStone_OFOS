@@ -139,7 +139,6 @@ const AdminDashboard = () => {
 
   return (
     <div className="container-fluid">
-      <AdminNavbar /><br />
       <div className="row mb-4">
         <div className="col-md-4">
           <div className={`card text-white ${activeTab === 'restaurants' ? 'bg-primary' : 'bg-secondary'}`}
